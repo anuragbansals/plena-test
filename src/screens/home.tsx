@@ -30,14 +30,6 @@ const Home = (props: IProps) => {
     dispatch(getProducts());
   }, []);
 
-  if (error) {
-    return <Text style={styles.others}>Something went wrong!</Text>;
-  }
-
-  if (loading) {
-    return <Text style={styles.others}>Loading....</Text>;
-  }
-
   const handleCart = (item: ProductItem, add: boolean) => {
     if (add) {
       dispatch(addToCart(item));
@@ -54,6 +46,14 @@ const Home = (props: IProps) => {
   const handleWishlist = (id: number) => {
     dispatch(addFavorite(id));
   };
+
+  if (error) {
+    return <Text style={styles.others}>Something went wrong!</Text>;
+  }
+
+  if (loading) {
+    return <Text style={styles.others}>Loading....</Text>;
+  }
 
   return (
     <View style={styles.container}>
@@ -76,7 +76,6 @@ const Home = (props: IProps) => {
           />
         )}
       />
-      <Text>Home</Text>
     </View>
   );
 };
