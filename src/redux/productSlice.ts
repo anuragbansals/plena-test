@@ -66,7 +66,7 @@ export const ProductSlice = createSlice({
 
       let products: Array<ProductItem> = [];
       state.products.forEach((item: ProductItem) => {
-        if (item.id === action.payload.id) {
+        if (item.id === action.payload) {
           obj = {
             ...item,
             isFavorite: !item.isFavorite,
@@ -137,9 +137,7 @@ export const ProductSlice = createSlice({
         state.products.forEach((item: ProductItem) => {
           if (item.id === action.payload.id) {
             obj = {
-              ...action.payload,
-              isFavorite: item.isFavorite,
-              addedToCart: false,
+              ...item,
             };
           }
         });

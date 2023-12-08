@@ -2,14 +2,10 @@ import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import Home from '../screens/home';
 import TabBar from './tabBar';
-import Cart from '../screens/cart';
-import ProductDetails from '../screens/productDetails';
 import {PathNames} from '../constants/pathnames';
 import ProductStack from './productStack';
 import Wishlist from '../screens/wishlist';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,6 +21,7 @@ const HomeStack = (props: IProps) => {
         options={{
           headerShown: false,
           tabBarStyle: {display: 'none'},
+          tabBarLabel: 'Products',
         }}
         name={PathNames.productStack}>
         {props => <ProductStack />}
@@ -32,6 +29,7 @@ const HomeStack = (props: IProps) => {
       <Tab.Screen
         options={{
           headerShown: false,
+          tabBarLabel: 'Wishlist',
         }}
         name={PathNames.wishlistScreen}>
         {props => <Wishlist {...props} />}

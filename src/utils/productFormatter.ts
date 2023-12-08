@@ -30,8 +30,9 @@ export const getProductFormatter = (data: any) => {
 export const cartFormatter = (data, payload, increment = true) => {
   let obj: CartItem | any = {};
   let cartArr: Array<CartItem> = [];
+
   data.forEach((item: CartItem) => {
-    if (payload.id === item.item.id) {
+    if (payload === item.item.id) {
       obj = {
         ...item,
         count: increment ? item.count + 1 : item.count - 1,

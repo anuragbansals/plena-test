@@ -1,8 +1,15 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+
 import {useDispatch, useSelector} from 'react-redux';
-import {getProducts, addToCart, removeFromCart} from '../redux/productSlice';
-import {RootState} from '../redux/store';
+
+import {
+  getProducts,
+  addToCart,
+  removeFromCart,
+  addFavorite,
+} from '../redux/productSlice';
+import {AppDispatch, RootState} from '../redux/store';
 import {ProductItem} from '../redux/productSlice';
 import ProdItem from '../organisms/prodItem';
 import {ColorPalette} from '../constants/colors';
@@ -14,8 +21,8 @@ interface IProps {
 }
 
 const Home = (props: IProps) => {
-  const {navigation, route} = props;
-  const dispatch = useDispatch();
+  const {navigation} = props;
+  const dispatch = useDispatch<AppDispatch>();
   const {products, loading, error} = useSelector(
     (state: RootState) => state.products,
   );
@@ -23,8 +30,12 @@ const Home = (props: IProps) => {
     dispatch(getProducts());
   }, []);
 
+  if (error) {
+    return <Text style={styles.others}>Something went wrong!</Text>;
+  }
+
   if (loading) {
-    return <Text style={{color: 'black'}}>Loading....</Text>;
+    return <Text style={styles.others}>Loading....</Text>;
   }
 
   const handleCart = (item: ProductItem, add: boolean) => {
@@ -38,6 +49,10 @@ const Home = (props: IProps) => {
     navigation.navigate(PathNames.productDetailScreen, {
       id: id,
     });
+  };
+
+  const handleWishlist = (id: number) => {
+    dispatch(addFavorite(id));
   };
 
   return (
@@ -57,6 +72,7 @@ const Home = (props: IProps) => {
             item={item}
             onPress={handleCart}
             handleProduct={handleProductDetail}
+            handleWishlist={handleWishlist}
           />
         )}
       />
@@ -73,5 +89,10 @@ const styles = StyleSheet.create({
     backgroundColor: ColorPalette.white,
     paddingHorizontal: 24,
     paddingTop: 24,
+  },
+  others: {
+    color: 'black',
+    textAlign: 'center',
+    marginTop: 12,
   },
 });
